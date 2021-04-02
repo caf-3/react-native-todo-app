@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "myproject",
-    "slug": "myproject",
+    "name": "My todos",
+    "slug": "My-todos",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/todo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/todo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,9 +21,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/todo.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.My_Todos"
     },
     "web": {
       "favicon": "./assets/favicon.png"
