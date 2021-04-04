@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import Header from './components/Header';
 import TodoItem from './components/TodoItem';
 import AddTodo from './components/AddTodo';
@@ -15,29 +15,43 @@ export default function App(){
     })
   } 
   const submitHandler = (text) =>{
-    setTodo(prevTodos => {
-      return [
-        {text: text, id: parseInt((Math.random() * 1000))},
-        ...prevTodos
-      ]
-    })
+    if(text.length > 3){
+      setTodo(prevTodos => {
+        return [
+          {text: text, id: parseInt((Math.random() * 1000))},
+          ...prevTodos
+        ]
+      })
+    }else{
+      Alert.alert('Ooops!', 'Minium character length must be 4.', [
+        {text: 'Got it', onPress: () => console.log('Alert closed')}
+      ]);
+    }
+    
   }
   return(
-    <View style={styles.container}>
-      <Header />
-      <View style={styles.content}>
-        <AddTodo submitHandler={submitHandler} />
-        <View style={styles.list}>
-          <FlatList
-          data={todos}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <TodoItem item={item} pressHandler={pressHandler} />
-          )}
-          />
+    <TouchableWithoutFeedback
+    onPress={() => {
+      Keyboard.dismiss();
+      console.log('Keyword dismissed');
+    }}
+    >
+      <View style={styles.container}>
+        <Header />
+        <View style={styles.content}>
+          <AddTodo submitHandler={submitHandler} />
+          <View style={styles.list}>
+            <FlatList
+            data={todos}
+            keyExtractor={item => item.id.toString()}
+            renderItem={({item}) => (
+              <TodoItem item={item} pressHandler={pressHandler} />
+            )}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -47,9 +61,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   content:{
-    padding: 40
+    padding: 40,
+    flex: 1
   },
   list:{
-    marginTop: 20
+    marginTop: 20,
+    flex: 1
   }
 });
